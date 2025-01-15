@@ -12,6 +12,10 @@
 
 #include "globaldata.cpp"
 
+#include<cstdlib>
+#include <vector>
+#include <iostream>
+
 struct MyBoidsViewer : Viewer {
 
 	glm::vec3 jointPosition;
@@ -25,7 +29,42 @@ struct MyBoidsViewer : Viewer {
 
 	VertexShaderAdditionalData additionalShaderData;
 
+	std::vector<glm::vec2> boidsPositions;
+
 	MyBoidsViewer() : Viewer(viewerName, 1280, 720) {}
+
+	void initBoidsPos() {
+		// based on screen width/ height
+
+		constexpr float padding = 50.f;
+
+		// scatter them at each sides of the screen
+		std::vector<glm::vec2> basePositions = {
+			// top left
+			{ padding, viewportHeight - padding },
+			// top middle
+			//{ viewportWidth * 0.5f, viewportHeight - padding },
+			// top right
+			{ viewportWidth - padding, viewportHeight - padding },
+			// bottom left
+			{ 0 + padding, 0 + padding },
+			// bottom right
+			{ viewportWidth - padding, 0 + padding },
+		};
+
+		int length = 100;
+		for (size_t i = 0; i < length; i++)
+		{
+			int randomOffset = rand() % 1000 + 1;
+			int randomOffsetY = rand() % 1000 + 1;
+			std::cout << randomOffset << ":" << randomOffsetY << std::endl;
+
+			glm::vec2 res = { basePositions[i % basePositions.size()].x + randomOffset,  basePositions[i % basePositions.size()].y + randomOffsetY };
+			// std::cout << res.x << ":" << res.y << std::endl;
+
+			boidsPositions.push_back(res);
+		}
+	}
 
 	void init() override {
 		cubePosition = glm::vec3(1.f, 0.25f, -1.f);
@@ -37,8 +76,19 @@ struct MyBoidsViewer : Viewer {
 		altKeyPressed = false;
 
 		additionalShaderData.Pos = { 0.,0.,0. };
+
+		// initialize random seed
+		srand(time(NULL));
+
+		initBoidsPos();
 	}
 
+	float distance(glm::vec2 boid1, glm::vec2 boid2) {
+		return std::sqrt(
+			(boid1.x - boid2.x) * (boid1.x - boid2.x) +
+			(boid1.y - boid2.y) * (boid1.y - boid2.y)
+			);
+	}
 
 	void update(double elapsedTime) override {
 		boneAngle = (float)elapsedTime;
@@ -55,47 +105,42 @@ struct MyBoidsViewer : Viewer {
 
 		pCustomShaderData = &additionalShaderData;
 		CustomShaderDataSize = sizeof(VertexShaderAdditionalData);
+
+		// move_all_boids_to_new_positions()
+		float centeringFactor = 0.005; // adjust velocity by this %
+
+		int centerX = 0;
+		int centerY = 0;
+		int numNeighbors = 0;
+
+		for (size_t i = 0; i < boidsPositions.size(); i++)
+		{
+
+			for (size_t j = 0; j < boidsPositions.size(); j++)
+			{
+				// TODO: variable
+				int visualRange = 75;
+				if (distance(boidsPositions[i], boidsPositions[j]) < visualRange) {
+					centerX += boidsPositions[j].x;
+					centerY += boidsPositions[j].y;
+					numNeighbors += 1;
+				}
+			}
+
+			if (numNeighbors) {
+				centerX = centerX / numNeighbors;
+				centerY = centerY / numNeighbors;
+
+				boidsPositions[i].x += (centerX - boidsPositions[i].x) * centeringFactor * elapsedTime;
+				boidsPositions[i].y += (centerY - boidsPositions[i].y) * centeringFactor * elapsedTime;
+			}
+		}
 	}
 
 	void render3D_custom(const RenderApi3D& api) const override {
-		//Here goes your drawcalls affected by the custom vertex shader
-		api.horizontalPlane({ 0, 2, 0 }, { 4, 4 }, 200, glm::vec4(0.0f, 0.2f, 1.f, 1.f));
 	}
 
 	void render3D(const RenderApi3D& api) const override {
-		api.horizontalPlane({ 0, 0, 0 }, { 10, 10 }, 1, glm::vec4(0.9f, 0.9f, 0.9f, 1.f));
-
-		api.grid(10.f, 10, glm::vec4(0.5f, 0.5f, 0.5f, 1.f), nullptr);
-
-		api.axisXYZ(nullptr);
-
-		constexpr float cubeSize = 0.5f;
-		glm::mat4 cubeModelMatrix = glm::translate(glm::identity<glm::mat4>(), cubePosition);
-		api.solidCube(cubeSize, white, &cubeModelMatrix);
-
-		{
-			glm::vec3 vertices[] = {
-				{0.5f * cubeSize, 0.5f * cubeSize, 0.5f * cubeSize},
-				{0.f, cubeSize, 0.f},
-				{0.5f * cubeSize, 0.5f * cubeSize, -0.5f * cubeSize},
-				{0.f, cubeSize, 0.f},
-				{-0.5f * cubeSize, 0.5f * cubeSize, 0.5f * cubeSize},
-				{0.f, cubeSize, 0.f},
-				{-0.5f * cubeSize, 0.5f * cubeSize, -0.5f * cubeSize},
-				{0.f, cubeSize, 0.f},
-			};
-			api.lines(vertices, COUNTOF(vertices), white, &cubeModelMatrix);
-		}
-
-		{
-			glm::quat q = glm::angleAxis(boneAngle, glm::vec3(0.f, 1.f, 0.f));
-			glm::vec3 childRelPos = { 1.f, 1.f, 0.f };
-			api.bone(childRelPos, white, q, glm::vec3(0.f, 0.f, 0.f));
-			glm::vec3 childAbsPos = q * childRelPos;
-			api.solidSphere(childAbsPos, 0.05f, 10, 10, white);
-		}
-
-		api.solidSphere(glm::vec3(-1.f, 0.5f, 1.f), 0.5f, 100, 100, white);
 	}
 
 	void render2D(const RenderApi2D& api) const override {
@@ -143,6 +188,16 @@ struct MyBoidsViewer : Viewer {
 			};
 			api.lines(vertices, COUNTOF(vertices), white);
 		}
+
+		//  draw_boids()
+		for each (glm::vec2 boidPos in boidsPositions)
+		{
+			// TODO: change shape for triagle/ make it a parameter?
+			// TODO: create a custom struct to store boid info??
+			// arr[i] = value;
+			//std::cout << boidPos.x << ":" << boidPos.y << std::endl;
+			api.circleFill(boidPos, padding / 2, 5, white);
+		}
 	}
 
 	void drawGUI() override {
@@ -155,22 +210,6 @@ struct MyBoidsViewer : Viewer {
 		ImGui::ColorEdit4("Background color", (float*)&backgroundColor, ImGuiColorEditFlags_NoInputs);
 
 		ImGui::SliderFloat("Point size", &pointSize, 0.1f, 10.f);
-		ImGui::SliderFloat("Line Width", &lineWidth, 0.1f, 10.f);
-		ImGui::Separator();
-		ImGui::SliderFloat3("Light dir", (float(&)[3])lightDir, -1.f, 1.f);
-		ImGui::SliderFloat("Light Strength", &lightStrength, 0.f, 2.f);
-		ImGui::SliderFloat("Ligh Ambient", &lightAmbient, 0.f, 0.5f);
-		ImGui::SliderFloat("Ligh Specular", &specular, 0.f, 1.f);
-		ImGui::SliderFloat("Ligh Specular Pow", &specularPow, 1.f, 200.f);
-		ImGui::Separator();
-		ImGui::SliderFloat3("CustomShader_Pos", &additionalShaderData.Pos.x, -10.f, 10.f);
-		ImGui::Separator();
-		float fovDegrees = glm::degrees(camera.fov);
-		if (ImGui::SliderFloat("Camera field of fiew (degrees)", &fovDegrees, 15, 180)) {
-			camera.fov = glm::radians(fovDegrees);
-		}
-
-		ImGui::SliderFloat3("Cube Position", (float(&)[3])cubePosition, -1.f, 1.f);
 
 		ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
 
