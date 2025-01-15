@@ -114,6 +114,8 @@ struct MyViewer : Viewer {
 		
 		constexpr float padding = 50.f;
 
+		// Circle/ square following mouse position
+		// Shows how to use inputs
 		if (altKeyPressed) {
 			if (leftMouseButtonPressed) {
 				api.circleFill(mousePos, padding, 10, white);
@@ -132,6 +134,7 @@ struct MyViewer : Viewer {
 			}
 		}
 
+		// draw debug arrow
 		{
 			const glm::vec2 from = { viewportWidth * 0.5f, padding };
 			const glm::vec2 to = { viewportWidth * 0.5f, 2.f * padding };
@@ -140,6 +143,7 @@ struct MyViewer : Viewer {
 			api.arrow(from, to, thickness, hatRatio, white);
 		}
 
+		// draw lines
 		{
 			glm::vec2 vertices[] = {
 				{ padding, viewportHeight - padding },
