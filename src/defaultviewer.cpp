@@ -19,7 +19,7 @@ constexpr glm::vec4 blue = { 0.f, 0.f, 1.f, 1.f };
 constexpr glm::vec4 green = { 0.f, 1.f, 0.f, 1.f };
 constexpr glm::vec4 red = { 1.f, 0.f, 0.f, 1.f };
 
-struct VertexShaderAdditionalData{
+struct VertexShaderAdditionalData {
 	glm::vec3 Pos;
 	/// beware of alignement (std430 rule)
 };
@@ -29,9 +29,9 @@ struct MyViewer : Viewer {
 	glm::vec3 jointPosition;
 	glm::vec3 cubePosition;
 	float boneAngle;
-	
+
 	glm::vec2 mousePos;
-	
+
 	bool leftMouseButtonPressed;
 	bool altKeyPressed;
 
@@ -80,7 +80,7 @@ struct MyViewer : Viewer {
 		api.grid(10.f, 10, glm::vec4(0.5f, 0.5f, 0.5f, 1.f), nullptr);
 
 		api.axisXYZ(nullptr);
-		
+
 		constexpr float cubeSize = 0.5f;
 		glm::mat4 cubeModelMatrix = glm::translate(glm::identity<glm::mat4>(), cubePosition);
 		api.solidCube(cubeSize, white, &cubeModelMatrix);
@@ -111,7 +111,7 @@ struct MyViewer : Viewer {
 	}
 
 	void render2D(const RenderApi2D& api) const override {
-		
+
 		constexpr float padding = 50.f;
 
 		// Circle/ square following mouse position
@@ -119,11 +119,13 @@ struct MyViewer : Viewer {
 		if (altKeyPressed) {
 			if (leftMouseButtonPressed) {
 				api.circleFill(mousePos, padding, 10, white);
-			} else {
+			}
+			else {
 				api.circleContour(mousePos, padding, 10, white);
 			}
-				
-		} else {
+
+		}
+		else {
 			const glm::vec2 min = mousePos + glm::vec2(padding, padding);
 			const glm::vec2 max = mousePos + glm::vec2(-padding, -padding);
 			if (leftMouseButtonPressed) {
@@ -183,7 +185,7 @@ struct MyViewer : Viewer {
 		ImGui::SliderFloat3("Cube Position", (float(&)[3])cubePosition, -1.f, 1.f);
 
 		ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
-		
+
 		ImGui::End();
 
 		if (showDemoWindow) {
@@ -193,7 +195,7 @@ struct MyViewer : Viewer {
 	}
 };
 
-//int main(int argc, char** argv) {
-//	MyViewer v;
-//	return v.run();
-//}
+int main(int argc, char** argv) {
+	MyViewer v;
+	return v.run();
+}

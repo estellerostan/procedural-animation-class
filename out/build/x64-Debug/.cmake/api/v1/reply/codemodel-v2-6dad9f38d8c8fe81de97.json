@@ -39,7 +39,7 @@
 				{
 					"directoryIndex" : 0,
 					"id" : "OpenGLSandbox::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-OpenGLSandbox-Debug-a3f153b1892c5c5bbf09.json",
+					"jsonFile" : "target-OpenGLSandbox-Debug-0386cd0bccdb7ddfdc41.json",
 					"name" : "OpenGLSandbox",
 					"projectIndex" : 0
 				}
@@ -49,12 +49,12 @@
 	"kind" : "codemodel",
 	"paths" : 
 	{
-		"build" : "C:/Users/estel/Documents/ENJMIN/master2/anim-procedurale/Source/out/build/x64-Debug",
-		"source" : "C:/Users/estel/Documents/ENJMIN/master2/anim-procedurale/Source"
+		"build" : "C:/Users/ELE64f86f5a7fb3a/Documents/Projects/procedural-animation-class/out/build/x64-Debug",
+		"source" : "C:/Users/ELE64f86f5a7fb3a/Documents/Projects/procedural-animation-class"
 	},
 	"version" : 
 	{
 		"major" : 2,
-		"minor" : 6
+		"minor" : 7
 	}
 }

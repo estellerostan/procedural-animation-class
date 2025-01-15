@@ -80,7 +80,7 @@
 			[
 				{
 					"backtrace" : 4,
-					"define" : "SHADER_PATH=\"C:/Users/estel/Documents/ENJMIN/master2/anim-procedurale/Source/src/shaders/\""
+					"define" : "SHADER_PATH=\"C:/Users/ELE64f86f5a7fb3a/Documents/Projects/procedural-animation-class/src/shaders/\""
 				},
 				{
 					"backtrace" : 5,
@@ -91,19 +91,19 @@
 			[
 				{
 					"backtrace" : 6,
-					"path" : "C:/Users/estel/Documents/ENJMIN/master2/anim-procedurale/Source/./thirdparty/glfw/win64/include"
+					"path" : "C:/Users/ELE64f86f5a7fb3a/Documents/Projects/procedural-animation-class/./thirdparty/glfw/win64/include"
 				},
 				{
 					"backtrace" : 6,
-					"path" : "C:/Users/estel/Documents/ENJMIN/master2/anim-procedurale/Source/thirdparty/glad"
+					"path" : "C:/Users/ELE64f86f5a7fb3a/Documents/Projects/procedural-animation-class/thirdparty/glad"
 				},
 				{
 					"backtrace" : 6,
-					"path" : "C:/Users/estel/Documents/ENJMIN/master2/anim-procedurale/Source/thirdparty/glm"
+					"path" : "C:/Users/ELE64f86f5a7fb3a/Documents/Projects/procedural-animation-class/thirdparty/glm"
 				},
 				{
 					"backtrace" : 6,
-					"path" : "C:/Users/estel/Documents/ENJMIN/master2/anim-procedurale/Source/thirdparty/imgui"
+					"path" : "C:/Users/ELE64f86f5a7fb3a/Documents/Projects/procedural-animation-class/thirdparty/imgui"
 				}
 			],
 			"language" : "CXX",
@@ -121,7 +121,8 @@
 				10,
 				11,
 				12,
-				13
+				13,
+				14
 			]
 		},
 		{
@@ -135,7 +136,7 @@
 			[
 				{
 					"backtrace" : 4,
-					"define" : "SHADER_PATH=\"C:/Users/estel/Documents/ENJMIN/master2/anim-procedurale/Source/src/shaders/\""
+					"define" : "SHADER_PATH=\"C:/Users/ELE64f86f5a7fb3a/Documents/Projects/procedural-animation-class/src/shaders/\""
 				},
 				{
 					"backtrace" : 5,
@@ -146,19 +147,19 @@
 			[
 				{
 					"backtrace" : 6,
-					"path" : "C:/Users/estel/Documents/ENJMIN/master2/anim-procedurale/Source/./thirdparty/glfw/win64/include"
+					"path" : "C:/Users/ELE64f86f5a7fb3a/Documents/Projects/procedural-animation-class/./thirdparty/glfw/win64/include"
 				},
 				{
 					"backtrace" : 6,
-					"path" : "C:/Users/estel/Documents/ENJMIN/master2/anim-procedurale/Source/thirdparty/glad"
+					"path" : "C:/Users/ELE64f86f5a7fb3a/Documents/Projects/procedural-animation-class/thirdparty/glad"
 				},
 				{
 					"backtrace" : 6,
-					"path" : "C:/Users/estel/Documents/ENJMIN/master2/anim-procedurale/Source/thirdparty/glm"
+					"path" : "C:/Users/ELE64f86f5a7fb3a/Documents/Projects/procedural-animation-class/thirdparty/glm"
 				},
 				{
 					"backtrace" : 6,
-					"path" : "C:/Users/estel/Documents/ENJMIN/master2/anim-procedurale/Source/thirdparty/imgui"
+					"path" : "C:/Users/ELE64f86f5a7fb3a/Documents/Projects/procedural-animation-class/thirdparty/imgui"
 				}
 			],
 			"language" : "C",
@@ -183,7 +184,7 @@
 			},
 			{
 				"backtrace" : 2,
-				"fragment" : "-LIBPATH:C:\\Users\\estel\\Documents\\ENJMIN\\master2\\anim-procedurale\\Source\\.\\thirdparty\\glfw\\win64\\lib-vc2019",
+				"fragment" : "-LIBPATH:C:\\Users\\ELE64f86f5a7fb3a\\Documents\\Projects\\procedural-animation-class\\.\\thirdparty\\glfw\\win64\\lib-vc2019",
 				"role" : "libraryPath"
 			},
 			{
@@ -229,7 +230,8 @@
 				10,
 				11,
 				12,
-				13
+				13,
+				14
 			]
 		}
 	],
@@ -317,6 +319,12 @@
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
 			"path" : "thirdparty/imgui/imgui_impl_opengl3.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "src/defaultviewer.cpp",
 			"sourceGroupIndex" : 0
 		}
 	],
