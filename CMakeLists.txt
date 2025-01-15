@@ -41,6 +41,9 @@ set(SOURCE_FILES
 	src/renderengine.cpp
 	src/renderapi.cpp
 	src/viewer.cpp
+	src/defaultviewer.cpp
+	src/boidsviewer.cpp
+	src/globaldata.cpp
 	thirdparty/glad/glad.c
 	thirdparty/imgui/imgui.cpp
 	thirdparty/imgui/imgui_demo.cpp
@@ -48,8 +51,7 @@ set(SOURCE_FILES
 	thirdparty/imgui/imgui_tables.cpp
 	thirdparty/imgui/imgui_widgets.cpp
 	thirdparty/imgui/imgui_impl_glfw.cpp
-	thirdparty/imgui/imgui_impl_opengl3.cpp
- src/defaultviewer.cpp)
+	thirdparty/imgui/imgui_impl_opengl3.cpp)
 
 set(INCLUDE_DIRECTORIES 
 	${INCLUDE_DIRECTORIES}

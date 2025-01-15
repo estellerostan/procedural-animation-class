@@ -12,7 +12,7 @@
 
 #include "globaldata.cpp"
 
-struct MyDefaultViewer : Viewer {
+struct MyBoidsViewer : Viewer {
 
 	glm::vec3 jointPosition;
 	glm::vec3 cubePosition;
@@ -25,7 +25,7 @@ struct MyDefaultViewer : Viewer {
 
 	VertexShaderAdditionalData additionalShaderData;
 
-	MyDefaultViewer() : Viewer(viewerName, 1280, 720) {}
+	MyBoidsViewer() : Viewer(viewerName, 1280, 720) {}
 
 	void init() override {
 		cubePosition = glm::vec3(1.f, 0.25f, -1.f);
