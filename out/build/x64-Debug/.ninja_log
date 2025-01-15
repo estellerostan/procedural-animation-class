@@ -1,0 +1,16 @@
+# ninja log v5
+36	173	7586474058692036	CMakeFiles/OpenGLSandbox.dir/thirdparty/glad/glad.c.obj	67b6af1e54736655
+51	356	7586474060497825	CMakeFiles/OpenGLSandbox.dir/thirdparty/imgui/imgui_demo.cpp.obj	19ba427b8e735cf6
+10	188	7586474058840058	CMakeFiles/OpenGLSandbox.dir/src/shader.cpp.obj	d9df1f27847d1dc4
+21	450	7586474061456559	CMakeFiles/OpenGLSandbox.dir/src/renderengine.cpp.obj	fde8906c88945aaa
+16	275	7586474059727903	CMakeFiles/OpenGLSandbox.dir/src/drawbuffer.cpp.obj	dcae69423c741297
+64	366	7586474060617827	CMakeFiles/OpenGLSandbox.dir/thirdparty/imgui/imgui_tables.cpp.obj	4c355501fecf757a
+81	431	7586474061260871	CMakeFiles/OpenGLSandbox.dir/thirdparty/imgui/imgui_impl_opengl3.cpp.obj	f9bf97e4bcd0b726
+57	436	7586474061306127	CMakeFiles/OpenGLSandbox.dir/thirdparty/imgui/imgui_draw.cpp.obj	7a673078e065a862
+31	453	7586474061506556	CMakeFiles/OpenGLSandbox.dir/src/viewer.cpp.obj	db269e931b9c6494
+26	457	7586474061541142	CMakeFiles/OpenGLSandbox.dir/src/renderapi.cpp.obj	18acbd7d35f771a0
+70	458	7586474061541142	CMakeFiles/OpenGLSandbox.dir/thirdparty/imgui/imgui_widgets.cpp.obj	d484158fa47e4d87
+4	534	7586474062316181	CMakeFiles/OpenGLSandbox.dir/src/main.cpp.obj	e88b9b1dd7e9dbf4
+76	570	7586474062678562	CMakeFiles/OpenGLSandbox.dir/thirdparty/imgui/imgui_impl_glfw.cpp.obj	2c3d7497635240d0
+43	641	7586474063368371	CMakeFiles/OpenGLSandbox.dir/thirdparty/imgui/imgui.cpp.obj	f8e8c1db2c5ecf39
+641	1066	7586474067364820	OpenGLSandbox.exe	b8d4e6565cf22afe
