@@ -90,6 +90,43 @@ struct MyBoidsViewer : Viewer {
 			);
 	}
 
+	void flyTowardsCenter(glm::vec2& boid) {
+		float centeringFactor = 0.005; // adjust velocity by this %
+
+		int centerX = 0;
+		int centerY = 0;
+		int numNeighbors = 0;
+
+		for (size_t j = 0; j < boidsPositions.size(); j++)
+		{
+			glm::vec2 otherBoid = boidsPositions[j];
+			// TODO: variable
+			int visualRange = 175;
+			if (distance(boid, otherBoid) < visualRange) {
+				centerX += otherBoid.x;
+				centerY += otherBoid.y;
+				numNeighbors += 1;
+			}
+		}
+
+		if (numNeighbors) {
+			centerX = centerX / numNeighbors;
+			centerY = centerY / numNeighbors;
+
+			// TODO: deltaTime from elapsedTime
+			// TODO: make this a boid property to update the position based on the current velocity all at once with other rules
+			boid.x += (centerX - boid.x) * centeringFactor;
+			boid.y += (centerY - boid.y) * centeringFactor;
+		}
+	}
+
+	void moveBoidsToNewPos() {
+		for (size_t i = 0; i < boidsPositions.size(); i++)
+		{
+			flyTowardsCenter(boidsPositions[i]);
+		}
+	}
+
 	void update(double elapsedTime) override {
 		boneAngle = (float)elapsedTime;
 
@@ -106,35 +143,7 @@ struct MyBoidsViewer : Viewer {
 		pCustomShaderData = &additionalShaderData;
 		CustomShaderDataSize = sizeof(VertexShaderAdditionalData);
 
-		// move_all_boids_to_new_positions()
-		float centeringFactor = 0.005; // adjust velocity by this %
-
-		int centerX = 0;
-		int centerY = 0;
-		int numNeighbors = 0;
-
-		for (size_t i = 0; i < boidsPositions.size(); i++)
-		{
-
-			for (size_t j = 0; j < boidsPositions.size(); j++)
-			{
-				// TODO: variable
-				int visualRange = 75;
-				if (distance(boidsPositions[i], boidsPositions[j]) < visualRange) {
-					centerX += boidsPositions[j].x;
-					centerY += boidsPositions[j].y;
-					numNeighbors += 1;
-				}
-			}
-
-			if (numNeighbors) {
-				centerX = centerX / numNeighbors;
-				centerY = centerY / numNeighbors;
-
-				boidsPositions[i].x += (centerX - boidsPositions[i].x) * centeringFactor * elapsedTime;
-				boidsPositions[i].y += (centerY - boidsPositions[i].y) * centeringFactor * elapsedTime;
-			}
-		}
+		moveBoidsToNewPos();
 	}
 
 	void render3D_custom(const RenderApi3D& api) const override {
