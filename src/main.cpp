@@ -11,11 +11,13 @@
 #include <glm/gtx/quaternion.hpp>
 #include "defaultviewer.cpp"
 #include "boidsviewer.cpp"
+#include "particlesviewer.cpp"
 
 
 
 int main(int argc, char** argv) {
 	//MyDefaultViewer v;
-	MyBoidsViewer v;
+	//MyBoidsViewer v;
+	MyParticlesViewer v;
 	return v.run();
 }

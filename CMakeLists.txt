@@ -44,6 +44,7 @@ set(SOURCE_FILES
 	src/defaultviewer.cpp
 	src/boidsviewer.cpp
 	src/globaldata.cpp
+	src/particlesviewer.cpp
 	thirdparty/glad/glad.c
 	thirdparty/imgui/imgui.cpp
 	thirdparty/imgui/imgui_demo.cpp
@@ -51,7 +52,8 @@ set(SOURCE_FILES
 	thirdparty/imgui/imgui_tables.cpp
 	thirdparty/imgui/imgui_widgets.cpp
 	thirdparty/imgui/imgui_impl_glfw.cpp
-	thirdparty/imgui/imgui_impl_opengl3.cpp)
+	thirdparty/imgui/imgui_impl_opengl3.cpp 
+	)
 
 set(INCLUDE_DIRECTORIES 
 	${INCLUDE_DIRECTORIES}
@@ -63,7 +65,7 @@ set(INCLUDE_DIRECTORIES
 file(REAL_PATH "./src/shaders/" SHADER_FILES_ABS_PATH)
 add_compile_definitions(SHADER_PATH="${SHADER_FILES_ABS_PATH}/")
 
-add_executable (${PROJECT_NAME} ${SOURCE_FILES} "src/defaultviewer.cpp")
+add_executable (${PROJECT_NAME} ${SOURCE_FILES} "src/defaultviewer.cpp" "src/particlesviewer.cpp")
 
 target_compile_definitions(${PROJECT_NAME} PUBLIC _CRT_SECURE_NO_WARNINGS)
 target_include_directories(${PROJECT_NAME} PUBLIC ${INCLUDE_DIRECTORIES})
