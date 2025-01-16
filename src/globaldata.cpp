@@ -11,6 +11,7 @@ constexpr glm::vec4 blue = { 0.f, 0.f, 1.f, 1.f };
 constexpr glm::vec4 green = { 0.f, 1.f, 0.f, 1.f };
 constexpr glm::vec4 red = { 1.f, 0.f, 0.f, 1.f };
 constexpr glm::vec4 pink = { 0.98f, 0.86f, 0.98f, 1.0f };
+constexpr glm::vec4 translucideGreen = { 0.f, 1.f, 0.f, 0.4f };
 
 struct VertexShaderAdditionalData {
 	glm::vec3 Pos;

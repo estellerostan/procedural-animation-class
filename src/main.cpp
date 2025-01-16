@@ -12,12 +12,15 @@
 #include "defaultviewer.cpp"
 #include "boidsviewer.cpp"
 #include "particlesviewer.cpp"
+#include "particles3Dviewer.cpp"
 
 
 
 int main(int argc, char** argv) {
 	//MyDefaultViewer v;
 	//MyBoidsViewer v;
-	MyParticlesViewer v;
+	//MyParticlesViewer v;
+	MyParticles3DViewer v;
+
 	return v.run();
 }

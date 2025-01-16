@@ -14,38 +14,38 @@
 #include <vector>
 #include <iostream>
 
-struct MyParticlesViewer : Viewer {
+struct MyParticles3DViewer : Viewer {
 
 	//ADDED PARTICLE & WELL STRUCTS
 	struct Well {
 
-		glm::vec2 position;
-		const float padding = 10.0f;
+		glm::vec3 position;
+		const float padding = 1.0f;
 
-		Well(glm::vec2 initPosition) {
+		Well(glm::vec3 initPosition) {
 			position = initPosition;
 		}
 	};
 
 	struct Particle {
 
-		glm::vec2 position;
+		glm::vec3 position;
 		float velocity;
-		glm::vec2 direction;
-		const float padding = 5.0f;
+		glm::vec3 direction;
+		const float padding = 0.5f;
 
-		Particle(glm::vec2 initPosition) {
+		Particle(glm::vec3 initPosition) {
 			position = initPosition;
 			velocity = 1.0f;
-			direction = {0, 0};
+			direction = { 0, 0, 0 };
 		}
 
 		void updatePosition(std::vector<Well*> wellList) {
 
-			for(Well* well : wellList) {
-				glm::vec2 vecDir = well->position - position;
+			for (Well* well : wellList) {
+				glm::vec3 vecDir = well->position - position;
 				//If force is too big divide by something
-				float force = 1/(std::sqrt(vecDir.x * vecDir.x + vecDir.y * vecDir.y))/8;
+				float force = 1 / (std::sqrt(vecDir.x * vecDir.x + vecDir.y * vecDir.y + vecDir.z * vecDir.z)) / 8;
 				direction = direction + vecDir * force;
 			}
 			position = position + (direction * velocity);
@@ -70,7 +70,7 @@ struct MyParticlesViewer : Viewer {
 	std::vector<Well*> wellList;
 	std::vector<Particle*> particleList;
 
-	MyParticlesViewer() : Viewer(viewerName, 1280, 720) {}
+	MyParticles3DViewer() : Viewer(viewerName, 1280, 720) {}
 
 	void init() override {
 		cubePosition = glm::vec3(1.f, 0.25f, -1.f);
@@ -84,16 +84,18 @@ struct MyParticlesViewer : Viewer {
 		additionalShaderData.Pos = { 0.,0.,0. };
 		//INIT PARTICLES & WELLS
 		for (int i = 0; i < numParticles; i++) {
-			int randomW = rand() % viewportWidth;
-			int randomH = rand() % viewportHeight;
-			Particle* p = new Particle(glm::vec2(randomW, randomH));
+			int randomW = rand() % 20 - 20;
+			int randomH = rand() % 20 - 20;
+			int randomD = rand() % 20 - 20;
+			Particle* p = new Particle(glm::vec3(randomW, randomH, randomD));
 			particleList.push_back(p);
 		}
 
 		for (int i = 0; i < numWells; i++) {
-			int randomW = rand() % viewportWidth;
-			int randomH = rand() % viewportHeight;
-			Well *w = new Well(glm::vec2(randomW, randomH));
+			int randomW = rand() % 20 - 20;
+			int randomH = rand() % 20 - 20;
+			int randomD = rand() % 20 - 20;
+			Well* w = new Well(glm::vec3(randomW, randomH, randomD));
 			wellList.push_back(w);
 		}
 	}
@@ -127,13 +129,13 @@ struct MyParticlesViewer : Viewer {
 	}
 
 	void render3D(const RenderApi3D& api) const override {
-		/*api.horizontalPlane({ 0, 0, 0 }, { 10, 10 }, 1, glm::vec4(0.9f, 0.9f, 0.9f, 1.f));
+		//api.horizontalPlane({ 0, 0, 0 }, { 10, 10 }, 1, glm::vec4(0.9f, 0.9f, 0.9f, 1.f));
 
 		api.grid(10.f, 10, glm::vec4(0.5f, 0.5f, 0.5f, 1.f), nullptr);
 
 		api.axisXYZ(nullptr);
 
-		constexpr float cubeSize = 0.5f;
+		/*constexpr float cubeSize = 0.5f;
 		glm::mat4 cubeModelMatrix = glm::translate(glm::identity<glm::mat4>(), cubePosition);
 		api.solidCube(cubeSize, white, &cubeModelMatrix);
 
@@ -157,45 +159,53 @@ struct MyParticlesViewer : Viewer {
 			api.bone(childRelPos, white, q, glm::vec3(0.f, 0.f, 0.f));
 			glm::vec3 childAbsPos = q * childRelPos;
 			api.solidSphere(childAbsPos, 0.05f, 10, 10, white);
-		}
+		}*/
 
-		api.solidSphere(glm::vec3(-1.f, 0.5f, 1.f), 0.5f, 100, 100, white);*/
+		//api.solidSphere(glm::vec3(-1.f, 0.5f, 1.f), 0.5f, 100, 100, white);
+
+		//DRAW PARTICLES & WELLS
+		for (Particle* particle : particleList) {
+			api.solidSphere(particle->position, particle->padding, 100, 100, pink);
+		}
+		for (Well* well : wellList) {
+			api.solidSphere(well->position, well->padding, 100, 100, translucideGreen);
+		}
 	}
 
 	void render2D(const RenderApi2D& api) const override {
 
-		constexpr float padding = 50.f;
+		//constexpr float padding = 50.f;
 
-		// Circle/ square following mouse position
-		// Shows how to use inputs
-		if (altKeyPressed) {
-			if (leftMouseButtonPressed) {
-				api.circleFill(mousePos, padding, 10, white);
-			}
-			else {
-				api.circleContour(mousePos, padding, 10, white);
-			}
+		//// Circle/ square following mouse position
+		//// Shows how to use inputs
+		//if (altKeyPressed) {
+		//	if (leftMouseButtonPressed) {
+		//		api.circleFill(mousePos, padding, 10, white);
+		//	}
+		//	else {
+		//		api.circleContour(mousePos, padding, 10, white);
+		//	}
 
-		}
-		else {
-			const glm::vec2 min = mousePos + glm::vec2(padding, padding);
-			const glm::vec2 max = mousePos + glm::vec2(-padding, -padding);
-			if (leftMouseButtonPressed) {
-				api.quadFill(min, max, white);
-			}
-			else {
-				api.quadContour(min, max, white);
-			}
-		}
+		//}
+		//else {
+		//	const glm::vec2 min = mousePos + glm::vec2(padding, padding);
+		//	const glm::vec2 max = mousePos + glm::vec2(-padding, -padding);
+		//	if (leftMouseButtonPressed) {
+		//		api.quadFill(min, max, white);
+		//	}
+		//	else {
+		//		api.quadContour(min, max, white);
+		//	}
+		//}
 
-		// draw debug arrow
-		{
-			const glm::vec2 from = { viewportWidth * 0.5f, padding };
-			const glm::vec2 to = { viewportWidth * 0.5f, 2.f * padding };
-			constexpr float thickness = padding * 0.25f;
-			constexpr float hatRatio = 0.3f;
-			api.arrow(from, to, thickness, hatRatio, white);
-		}
+		//// draw debug arrow
+		//{
+		//	const glm::vec2 from = { viewportWidth * 0.5f, padding };
+		//	const glm::vec2 to = { viewportWidth * 0.5f, 2.f * padding };
+		//	constexpr float thickness = padding * 0.25f;
+		//	constexpr float hatRatio = 0.3f;
+		//	api.arrow(from, to, thickness, hatRatio, white);
+		//}
 
 		//// draw lines
 		//{
@@ -209,12 +219,12 @@ struct MyParticlesViewer : Viewer {
 		//}
 
 		//DRAW PARTICLES & WELLS
-		for (Particle* particle : particleList) {
+		/*for (Particle* particle : particleList) {
 			api.circleContour(particle->position, particle->padding, 20, pink);
 		}
 		for (Well* well : wellList) {
 			api.circleContour(well->position, well->padding, 20, white);
-		}
+		}*/
 
 
 	}

@@ -45,6 +45,7 @@ set(SOURCE_FILES
 	src/boidsviewer.cpp
 	src/globaldata.cpp
 	src/particlesviewer.cpp
+	src/particles3Dviewer.cpp
 	thirdparty/glad/glad.c
 	thirdparty/imgui/imgui.cpp
 	thirdparty/imgui/imgui_demo.cpp
