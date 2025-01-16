@@ -13,6 +13,7 @@
 #include "boidsviewer.cpp"
 #include "particlesviewer.cpp"
 #include "particles3Dviewer.cpp"
+#include "clothviewer.cpp"
 
 
 
@@ -20,7 +21,8 @@ int main(int argc, char** argv) {
 	//MyDefaultViewer v;
 	//MyBoidsViewer v;
 	//MyParticlesViewer v;
-	MyParticles3DViewer v;
+	//MyParticles3DViewer v;
+	MyClothViewer v;
 
 	return v.run();
 }
